@@ -1,0 +1,509 @@
+@font-face {
+    font-family: '36 Days';
+    src: url('fonts/36Days-Regular.woff2') format('woff2'),
+         url('fonts/36Days-Regular.woff') format('woff'),
+         url('fonts/36Days-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gwen Trial Black';
+    src: url('fonts/Gwen-Trial-Black.woff2') format('woff2'),
+         url('fonts/Gwen-Trial-Black.woff') format('woff'),
+         url('fonts/Gwen-Trial-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #e52127;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABbElEQVR4nKWUv04CQRDGlxDfwGCF7OyFmSPS8QpG7dWK6BOQaCmdPc9AYeMDaHMP4J/GEBtfQHbuKCg0QQoLzuwdMYveX5hki9vs/vLNfN+eEMvS0NzXgJ6W9KkBv7SkBwbqhkJURNlicPsaaMFAYcK6KQXVkbJU2HK5vRJA9LJhFLKk9+LtSvpIgmiJEwac/n47Tr2owllCi/2xbJ77Es98oGOWOJxAe6egQnxchaFvQNbeXEu89Rt4FApRzQcCdf8Ap0Zd8jzRZ8BBoNx2KjAUomKiYV+M2gSa55g1YkkXgVK1FKjbM27GruLQtJnrfnz2myXejYFOXjqdrf8mOU6dEbfNzAoBwUoGoJc1imo8szJQ5BzDcFBMGS0Y8JklHWYCA6e1lwN6Y6DrsWo1M0GrKmmUbIZ7UBhiFzfwMgH4KtatQKlaFA0bqPBqbaCIn+e9bUCwi7ARUAOdWtF42ghmyryA+L+Jfl40fgBci5Xk61UjwwAAAABJRU5ErkJggg=="), auto;
+}
+
+.container {
+    position: relative;
+    height: 50vw;
+    width: 80.90vw;
+    padding: 1px;
+    box-sizing: border-box;
+    background-color: #e52127;
+}
+
+.box {
+    position: absolute;
+    background-color: #151a1e;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid #e52127;
+    z-index: 0;
+   
+    transform-style: preserve-3d;
+    perspective: 1000px;
+   
+    border-radius: 2px;
+   
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.box:hover {
+    transform:translateZ(10px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+
+}
+
+
+
+
+
+
+.box1 {
+    width: calc(50vw);
+    height: calc(50vw);
+    top: 0px;
+    left: 0px;
+    font-size:50vw;
+}
+
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 10%;
+    cursor: inherit;
+}
+
+.logo-img {
+    width: 4%;
+    margin-right: 2%;
+    background-color:white;
+    padding:0.2%
+}
+
+.name {
+    color: white;
+    font-size: 5%;
+    font-family: '36 Days', sans-serif;
+    text-decoration: none;
+    margin-left: 0;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: inherit;
+}
+
+.designation {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+    justify-content: center;
+    top: 17%;
+    left: 34%;
+}
+
+.degree, .college {
+    text-align: right;
+    margin: 0px 0;
+    color: white;
+    font-style:italic;
+}
+
+.degree {
+    font-size: 2.6%;
+}
+
+.college {
+    font-size: 2.6%;
+}
+
+.quote {
+    position: absolute;
+    align-items: right;
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 3.4%;
+    color: white;
+    text-align: right;
+    top: 44%;
+    right: 1%;
+    transition: color 0.3s ease;
+}
+
+  .quote span {
+    color: #e52127;
+}
+  
+.quotesource {
+    position: absolute;
+    align-items: right;
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2%;
+    color: white;
+    text-align: right;
+    top: 51%;
+    right: 2.5%;
+   
+    background-color: #e52127;
+    padding: 0.7%;
+}
+
+  
+  .intro {
+    position: absolute;
+    top: 58%;
+    right:1%;
+    height: 0%;
+    width: 60%;
+    font-size: 3%;
+    text-align:right;
+    color: white;
+}
+
+.strikethrough {
+    position: relative;
+    color: #ffffff;
+  }
+
+  .strikethrough::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 0.2vw;
+    background-color: #e52127;
+  }
+
+  .hey {
+    color: #e52127;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+input[type=checkbox] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+label {
+    cursor: inherit;
+    text-indent: -9999px;
+    width: 10.54%;
+    height: 5.32%;
+    background: grey;
+    display: block;
+    border-radius: 20px;
+    position: absolute;
+    top: 35%;
+    left: 2%;
+}
+
+label:after {
+    content: '';
+    position: absolute;
+    top: 17%;
+    left: 10%;
+    width: 33.33%;
+    height: 66%;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input:checked + label {
+    background: #e52127;
+}
+
+input:checked + label:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+}
+
+
+.barcode img {
+    position:absolute;
+    padding: 0.7%;
+    width: 40%;
+    height: auto;
+    display: block;
+    top: 88%;
+    margin-left: 2%;
+    margin-right: auto;
+    background-color: #e52127;
+    border-radius: 1px;
+}
+
+
+
+
+.box2 {
+    width: calc(50vw / 1.618);
+    height: calc(50vw / 1.618);
+    top: 0px;
+    left: calc(50vw);
+    font-size: calc(50vw / 1.618);
+}
+
+.github-profile {
+    display: flex;
+    align-items: center;
+    padding: 10%;
+    cursor: inherit;
+}
+
+.github-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: inherit;
+}
+
+.github-logo {
+    width: 4%;
+    margin-right: 2%;
+    background-color:white;
+    padding:0.2%;
+    transform: rotate(0deg);
+}
+
+.username {
+    color: white;
+    font-size: 5%;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+    margin-left: 0;
+}
+
+.qrgitrick img {
+    position:absolute;
+    padding: 0%;
+    width: 20%;
+    height: auto;
+    display: block;
+    top: 78%;
+    margin-left: 2%;
+    margin-right: auto;
+    background-color: #e52127;
+    border-radius: 1px;
+
+}
+
+.box3 {
+    width: calc(50vw / 1.618 / 1.618);
+    height: calc(50vw / 1.618 / 1.618);
+    top: calc((50vw / 1.618));
+    left: calc(50vw + (50vw / 1.618 / 1.618 / 1.618));
+    font-size: calc(50vw / 1.618 / 1.618);
+}
+
+.insta-profile {
+    display: flex;
+    align-items: center;
+    padding: 10%;
+    cursor: inherit;
+}
+
+.insta-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: inherit;
+}
+
+.insta-logo {
+    width: 4%;
+    margin-right: 2%;
+    background-color:white;
+    padding:0.5% 0.5%;
+    transform: rotate(0deg);
+}
+
+.username {
+    color: white;
+    font-size: 6.1%;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+    margin-left: 0;
+}
+
+.quote3 {
+    position: absolute;
+    align-items: right;
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 3.4%;
+    color: white;
+    text-align: right;
+    top: 39%;
+    right: 1%;
+    transition: color 0.3s ease;
+}
+
+  .quote3 span {
+    color: #e52127;
+}
+
+.qrinsta img {
+    position:absolute;
+    padding: 0%;
+    width: 20%;
+    height: auto;
+    display: block;
+    top: 71%;
+    margin-left: 2%;
+    margin-right: auto;
+    background-color: #e52127;
+    border-radius: 1px;
+
+}
+
+.box4 {
+    width: calc(50vw / 1.618 / 1.618 / 1.618);
+    height: calc(50vw / 1.618 / 1.618 / 1.618);
+    top: calc((50vw / 1.618) + (50vw / 1.618 / 1.618 / 1.618 / 1.618));
+    left: calc(50vw);
+    font-size: calc(50vw / 1.618 / 1.618 / 1.618);
+}
+
+.quora-profile {
+    display: flex;
+    align-items: center;
+    padding: 10%;
+    cursor: inherit;
+}
+
+.quora-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: inherit;
+}
+
+.quora-logo {
+    width: 4%;
+    margin-right: 2%;
+    background-color:white;
+    padding:0.5% 0.5%;
+    transform: rotate(0deg);
+}
+
+.qrquora img {
+    position:absolute;
+    padding: 0%;
+    width: 25%;
+    height: auto;
+    display: block;
+    top: 60%;
+    margin-left: 2%;
+    margin-right: auto;
+    background-color: #e52127;
+    border-radius: 1px;
+
+}
+
+.box5 {
+    width: calc(50vw / 1.618 / 1.618 / 1.618 / 1.618);
+    height: calc(50vw / 1.618 / 1.618 / 1.618 / 1.618);
+    top: calc(50vw - (50vw / 1.618 / 1.618));
+    left: calc(50vw);
+    font-size: calc(50vw / 1.618 / 1.618 / 1.618 / 1.618);
+}
+
+.box6 {
+    width: calc(50vw / 1.618 / 1.618 / 1.618 / 1.618 / 1.618);
+    height: calc(50vw / 1.618 / 1.618 / 1.618 / 1.618 / 1.618);
+    top: calc(50vw - (50vw / 1.618 / 1.618));
+    left: calc(50vw + (50vw / 1.618 / 1.618 / 1.618 / 1.618));
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('asset/pattern.png');
+    background-repeat: repeat;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('asset/golden_ratio_spiral.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.pantone {
+    position: absolute;
+    bottom: calc(50vw / 1.618 / 1.618 / 1.618 + 10px);
+    left: calc(50vw + (50vw / 1.618 / 1.618 / 1.618 / 1.618) + 4px);
+    width: calc(50vw / 1.618 / 1.618 / 1.618 / 1.618 / 1.618);
+    color:#151a1e;
+}
+
+.pantone .word1 {
+    font-size: 0.7vw;
+    display: block;
+}
+
+.pantone .word2 {
+    font-size: 0.39vw;
+    display: block;
+}
+
+.rtpanel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 19vw;
+    height: 100vh;
+    background-color: #e52127;
+    z-index: 2;
+}
+
+.box7 {
+    width: calc(50vw / 1.618 / 1.618);
+    height: calc(50vw);
+    background-color:#151a1e;
+    top:0;
+    right: 0;
+}
+
