@@ -112,7 +112,7 @@ section {
     backdrop-filter: blur(8px);
 }
 /* Centering Profile Container */
-/* Centering Profile Container with Padding */
+/* Profile Container */
 .profile-container {
     display: flex;
     align-items: center;
@@ -120,7 +120,7 @@ section {
     gap: 3vw;
     text-align: left;
     margin-top: 10vh;
-    padding: 0 5vw; /* Added padding on left and right */
+    padding: 0 5vw;
 }
 
 /* Profile Image */
@@ -137,14 +137,15 @@ section {
 .profile-photo::before {
     content: "";
     position: absolute;
-    width: 11vw;
-    height: 11vw;
-    top: -0.5vw;
-    left: -0.5vw;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    top: -5px;
+    left: -5px;
     border-radius: 50%;
     background: conic-gradient(black, white, black, white);
     z-index: -1;
     animation: rotate-border 3s linear infinite;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional glow */
 }
 
 /* Animation for Border Rotation */
@@ -161,11 +162,9 @@ section {
 .profile-info {
     color: white;
 }
-
 .profile-info h1 {
     font-size: 4vh;
 }
-
 .about-text {
     font-size: 2vh;
     color: #ccc;
@@ -173,34 +172,27 @@ section {
     margin-top: 1vh;
 }
 
-
+/* Responsive Design */
 @media screen and (max-width: 440px) {
-
-
     .profile-container {
         margin-top: 3vh;
+        display: flex;
+        flex-direction: column;
     }
-
     .profile-photo {
-        height: 15vh;
-        width: 15vh;
+        height: 25vh;
+        width: 25vh;
     }
-
     .profile-info h1 {
-        font-size: 3.7vh;
+        font-size: 2.5vh;
     }
-    
     .about-text {
         font-size: 1.7vh;
         color: #ccc;
-        max-width: 50vw;
+        max-width: 70vw;
         margin-top: 1vh;
     }
-   
 }
-
-
-
 
 
 

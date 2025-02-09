@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotating Border Test</title>
+    <style>
+        /* Minimal CSS for testing */
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-photo::before {
+            content: "";
+            position: absolute;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            top: -5px;
+            left: -5px;
+            border-radius: 50%;
+            background: conic-gradient(black, white, black, white);
+            z-index: -1;
+            animation: rotate-border 3s linear infinite;
+        }
+
+        @keyframes rotate-border {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="images/profile.jpg" alt="Profile Photo" class="profile-photo">
+</body>
+</html>
