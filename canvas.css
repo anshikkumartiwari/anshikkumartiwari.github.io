@@ -1,0 +1,35 @@
+#backgroundCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.canvas-instruction {
+    color: #777;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Smooth scrolling/swiping for sections */
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#projects, #skills {
+    background-color: #222;
+    color: white;
+}

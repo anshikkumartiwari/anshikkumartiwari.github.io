@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="canvas.css">
+    <link rel="stylesheet" href="skills.css">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GLTFLoader for loading 3D models -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+</head>
+<body>
+
+    <!-- Background Canvas -->
+    <canvas id="backgroundCanvas"></canvas>
+    <span class="canvas-instruction"></span>
+
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <div class="nav-left">A</div>
+            <div class="nav-right">
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Landing Section -->
+    <section id="landing">
+        <div class="profile-container">
+            <img src="images/profile.jpg" alt="Profile Photo" class="profile-photo">
+            <div class="profile-info">
+                <h1>hi I'm Anshik👋</h1>
+                <p class="about-text">Aspiring Data Scientist and programming enthusiast.</p>
+            </div>
+        </div>
+
+
+        <!-- <div class="dice-container">
+            <div id="dice-3d"></div>
+        </div>
+         -->
+        
+    </section>
+
+    <!-- Projects Section -->
+    <section class="content-section" id="projects">
+        <h2>Projects</h2>
+        <div class="projects-container">
+            <div class="projects-wrapper">
+                <div class="project-card">
+                    <img src="images/3.png" alt="Project Image">
+                    <h3>Signature Detection</h3>
+                    <p>ML model that detects and <br>marks signatures</p>
+                </div>
+                <div class="project-card">
+                    <img src="images/3.png" alt="Project Image">
+                    <h3>Signature Detection</h3>
+                    <p>ML model that detects and <br>marks signatures</p>
+                </div>
+                <div class="project-card">
+                    <img src="images/3.png" alt="Project Image">
+                    <h3>Signature Detection</h3>
+                    <p>ML model that detects and <br>marks signatures</p>
+                </div>
+                <div class="project-card">
+                    <img src="images/3.png" alt="Project Image">
+                    <h3>Signature Detection</h3>
+                    <p>ML model that detects and <br>marks signatures</p>
+                </div>
+                <!-- Add more project cards -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Link animation.js at the end of the body -->
+    <script src="animation.js"></script>
+    
+    
+    <!-- Link animation.js at the end of the body -->
+    <script src="animation.js"></script>
+    
+    
+
+    <!-- Skills Section -->
+    <section class="content-section" id="skills">
+        <h2>Skills</h2>
+        <div id="skills-container"></div>
+    </section>
+
+    <!-- JavaScript to Load Skills -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("skills.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("skills-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading skills:", error));
+        });
+    </script>
+
+
+    <!-- Contact Section -->
+    <!-- Contact Section -->
+    <section class="content-section" id="contact">
+        <h2>Contact</h2>
+        <div class="contact-container">
+            
+            <!-- Right Container: Social Icons -->
+            <div class="contact-right">
+                <a href="https://github.com/anshikkumartiwari" target="_blank">
+                    <img src="assets/icons/github.svg" alt="GitHub">@anshikkumartiwari
+                </a>
+                <a href="https://in.linkedin.com/in/anshik-kumar-tiwari" target="_blank">
+                    <img src="assets/icons/linkedin.svg" alt="LinkedIn">LinkedIn
+                </a>
+                <a href="mailto:anshikkumartiwari@gmail.com">
+                    <img src="assets/icons/mail.svg" alt="Email">anshikkumartiwari@gmail.com
+                </a>
+                <a href="https://instagram.com/yourprofile" target="_blank">
+                    <img src="assets/icons/ig.svg" alt="Instagram">@anshikkumartiwari
+                </a>
+                <a href="https://x.com/yourprofile" target="_blank">
+                    <img src="assets/icons/x.svg" alt="X (Twitter)">
+                </a>
+                <a href="https://www.quora.com/profile/Anshik-Kumar-Tiwari" target="_blank">
+                    <img src="assets/icons/quora.svg" alt="Quora">Quora
+                </a>
+            </div>
+            
+            <!-- Left Container: Website URLs -->
+            <div class="contact-left">
+                <ul>
+                    <li><a href="https://anshik.pythonanywhere.com/" target="_blank">View Projects</a></li>
+                    <li><a href="https://pixelchase.42web.io" target="_blank">Try my Game</a></li>
+                    <li><a href="https://in.pinterest.com/anshikkumartiwari/vellore-institute-of-technology-chennai/" target="_blank">VIT Chennai - My pinterst board</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 @anshikkumartiwari</p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="script.js"></script>
+    <script src="canvas.js"></script>
+    <script src="animation.js"></script>
+    <script src="dice.js"></script>
+
+
+</body>
+</html>
