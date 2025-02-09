@@ -297,6 +297,30 @@ section {
     height: 5vw;
 }
 
+.languages {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 9vh;
+}
+.language-option {
+    display: flex;
+    align-items: center;
+    background-color: #222222;
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    font-weight: bold;
+    font-size: 18px;
+}
+.language-option img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
 /* --- Contact Section --- */
 #contact {
     width: 100vw;
@@ -324,8 +348,12 @@ section {
     align-items: center;
     flex-wrap: wrap;
     width: 80vw;
-    margin: 5vh auto;
+    margin: 0vh auto;
     gap: 5vh;
+}
+
+#contact h2{
+    margin-top: 2vh;
 }
 
 /* Left Container: Website URLs */

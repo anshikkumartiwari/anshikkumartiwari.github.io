@@ -1,4 +1,4 @@
-/* Skills Section */
+
 .skills-slider {
     width: 70vw;
     overflow: hidden;
@@ -6,16 +6,16 @@
     padding: 30px 0;
     display: flex;
     justify-content: center;
-    background: transparent; /* Fully transparent background */
+    background: transparent;
     border-radius: 500px;
 }
 
-/* Fade effect at edges */
+
 .skills-slider::before,
 .skills-slider::after {
     content: "";
     position: absolute;
-    width: 100px; /* Adjust for wider fade */
+    width: 100px;
     height: 100%;
     z-index: 2;
     pointer-events: none;
@@ -33,29 +33,29 @@
 }
 
 
-/* Track to hold icons */
+
 .skills-track {
     display: flex;
     align-items: center;
     gap: 40px;
-    animation: infiniteScroll 15s linear infinite; /* Slower speed */
+    animation: infiniteScroll 15s linear infinite;
     width: max-content;
 }
 
-/* Skill icons */
+
 .skills-track img {
     height: 60px;
     width: auto;
-    filter: brightness(0) invert(1); /* Makes icons white */
+    filter: brightness(0) invert(1);
     transition: transform 0.3s ease-in-out;
 }
 
-/* Hover effect */
+
 .skills-track img:hover {
     transform: scale(1.2);
 }
 
-/* Infinite scrolling animation */
+
 @keyframes infiniteScroll {
     from {
         transform: translateX(0);

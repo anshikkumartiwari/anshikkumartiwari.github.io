@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Portfolio - Anshik Kumar Tiwari</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="canvas.css">
     <link rel="stylesheet" href="skills.css">
-    <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- GLTFLoader for loading 3D models -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <link rel="icon" type="images/svg" href="images/A.svg">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script> -->
 
 </head>
 <body>
 
-    <!-- Background Canvas -->
     <canvas id="backgroundCanvas"></canvas>
     <span class="canvas-instruction"></span>
 
@@ -31,7 +29,7 @@
         </nav>
     </header>
 
-    <!-- Landing Section -->
+
     <section id="landing">
         <div class="profile-container">
             <img src="images/profile.jpg" alt="Profile Photo" class="profile-photo">
@@ -49,7 +47,6 @@
         
     </section>
 
-    <!-- Projects Section -->
     <section class="content-section" id="projects">
         <h2>Projects</h2>
         <div class="projects-container">
@@ -74,37 +71,30 @@
                     <h3>Signature Detection</h3>
                     <p>ML model that detects and <br>marks signatures</p>
                 </div>
-                <!-- Add more project cards -->
             </div>
         </div>
     </section>
-    
-    <!-- Link animation.js at the end of the body -->
-    <script src="animation.js"></script>
-    
-    
-    <!-- Link animation.js at the end of the body -->
-    <script src="animation.js"></script>
-    
-    
+ 
 
-    <!-- Skills Section -->
     <section class="content-section" id="skills">
+        <h2>Languages</h2>
+        <div class="languages">
+            <div class="language-option">
+                <img src="images/hi.png" alt="Hindi Flag">
+                Hi
+            </div>
+            <div class="language-option">
+                <img src="images/en.png" alt="English Flag">
+                En
+            </div>
+            <div class="language-option">
+                <img src="images/es.png" alt="Spanish Flag">
+                Es
+            </div>
+        </div>
         <h2>Skills</h2>
         <div id="skills-container"></div>
     </section>
-
-    <!-- JavaScript to Load Skills -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch("skills.html")
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("skills-container").innerHTML = data;
-                })
-                .catch(error => console.error("Error loading skills:", error));
-        });
-    </script>
 
 
     <!-- Contact Section -->
@@ -113,7 +103,6 @@
         <h2>Contact</h2>
         <div class="contact-container">
             
-            <!-- Right Container: Social Icons -->
             <div class="contact-right">
                 <a href="https://github.com/anshikkumartiwari" target="_blank">
                     <img src="assets/icons/github.svg" alt="GitHub">@anshikkumartiwari
@@ -138,9 +127,10 @@
             <!-- Left Container: Website URLs -->
             <div class="contact-left">
                 <ul>
-                    <li><a href="https://anshik.pythonanywhere.com/" target="_blank">View Projects</a></li>
+                    <li><a href="https://anshik.pythonanywhere.com/" target="_blank">View Mini Projects</a></li>
                     <li><a href="https://pixelchase.42web.io" target="_blank">Try my Game</a></li>
                     <li><a href="https://in.pinterest.com/anshikkumartiwari/vellore-institute-of-technology-chennai/" target="_blank">VIT Chennai - My pinterst board</a></li>
+                    <li><a href="https://anshikkumartiwari.github.io/old-portfolio/" target="_blank">Old Portfolio</a></li>
                 </ul>
             </div>
         </div>

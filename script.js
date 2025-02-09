@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Intersection Observer for section animations
     const sections = document.querySelectorAll(".hidden");
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     sections.forEach(section => observer.observe(section));
 
-    // Smooth scrolling for desktop (Mouse wheel)
     document.addEventListener("wheel", (event) => {
         if (event.deltaY > 0) {
             window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
@@ -20,10 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Smooth swipe scrolling for mobile (Fixed)
     let touchStartY = 0;
     let touchEndY = 0;
-    const swipeThreshold = 50; // Minimum swipe distance
+    const swipeThreshold = 50;
 
     document.addEventListener("touchstart", (e) => {
         touchStartY = e.touches[0].clientY;
@@ -39,17 +36,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (Math.abs(swipeDistance) > swipeThreshold) {
             if (swipeDistance < 0) {
-                window.scrollBy({ top: window.innerHeight, behavior: "smooth" }); // Swipe up → Scroll down
+                window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
             } else {
-                window.scrollBy({ top: -window.innerHeight, behavior: "smooth" }); // Swipe down → Scroll up
+                window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
             }
         }
     }
 
-    // Hide scrollbars (CSS method)
     document.body.style.overflow = "hidden";
 
-    // Load skills dynamically
     fetch("skills.html")
         .then(response => response.text())
         .then(data => {
@@ -62,11 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let track = document.querySelector(".skills-track");
         if (track) {
             let icons = track.innerHTML;
-            track.innerHTML += icons; // Duplicate icons for smooth looping effect
+            track.innerHTML += icons;
         }
     }
 
-    // Create Dice button if not already present
     let diceButton = document.getElementById("dice-button");
     if (!diceButton) {
         diceButton = document.createElement("button");
@@ -75,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
         diceButton.style.position = "fixed";
         diceButton.style.bottom = "20px";
         diceButton.style.right = "20px";
-        diceButton.style.padding = "10px";
-        diceButton.style.fontSize = "20px";
+        diceButton.style.padding = "3px";
+        diceButton.style.fontSize = "40px";
         diceButton.style.cursor = "pointer";
         diceButton.style.border = "none";
         diceButton.style.background = "white";
@@ -85,9 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(diceButton);
     }
 
-    // Canvas handling
     const canvasScripts = ["canvas.js", "canvas1.js", "canvas2.js", "canvas3.js", "canvas4.js", "canvas5.js"];
-    let activeCanvas = "canvas.js"; // Default canvas
+    let activeCanvas = "canvas.js";
     let animationFrame = null;
     let currentScript = null;
 
@@ -128,33 +121,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadCanvasScript(scriptName) {
         stopPreviousAnimation();
-
-        // Remove old canvas and create a new one
         removeExistingCanvas();
         createNewCanvas();
 
-        // Remove old script
         if (currentScript) {
             currentScript.remove();
         }
 
-        // Load new script
         currentScript = document.createElement("script");
         currentScript.src = scriptName;
         currentScript.onload = () => console.log(`Loaded: ${scriptName}`);
         document.body.appendChild(currentScript);
     }
 
-    // Load default canvas (canvas.js) initially
     loadCanvasScript("canvas.js");
+
+    function isInSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (!section) return false;
+
+        const rect = section.getBoundingClientRect();
+        return rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+    }
 
     diceButton.addEventListener("click", function () {
         let newCanvas;
         do {
             newCanvas = canvasScripts[Math.floor(Math.random() * canvasScripts.length)];
-        } while (newCanvas === activeCanvas); // Ensure it switches to a different one
+        } while (newCanvas === activeCanvas);
 
         activeCanvas = newCanvas;
-        loadCanvasScript(activeCanvas);
+
+        if (isInSection("skills") || isInSection("projects")) {
+            document.getElementById("landing").scrollIntoView({ behavior: "smooth" });
+            setTimeout(() => loadCanvasScript(activeCanvas), 600);
+        } else {
+            loadCanvasScript(activeCanvas); // Always switch canvas, even in contact section
+        }
     });
 });
