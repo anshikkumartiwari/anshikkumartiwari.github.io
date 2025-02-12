@@ -1,4 +1,3 @@
-
 .skills-slider {
     width: 70vw;
     overflow: hidden;
@@ -9,7 +8,6 @@
     background: transparent;
     border-radius: 500px;
 }
-
 
 .skills-slider::before,
 .skills-slider::after {
@@ -32,16 +30,13 @@
     background: linear-gradient(to left, rgb(34 34 34) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-
-
 .skills-track {
     display: flex;
     align-items: center;
     gap: 40px;
-    animation: infiniteScroll 15s linear infinite;
+    animation: infiniteScroll 30s linear infinite;
     width: max-content;
 }
-
 
 .skills-track img {
     height: 60px;
@@ -50,11 +45,9 @@
     transition: transform 0.3s ease-in-out;
 }
 
-
 .skills-track img:hover {
     transform: scale(1.2);
 }
-
 
 @keyframes infiniteScroll {
     from {

@@ -58,11 +58,28 @@ nav {
     backdrop-filter: blur(10px);
     z-index: 2;
 }
-
 .nav-left {
     font-size: 5vh;
     font-weight: bold;
     font-family: '36 Days', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-left a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    font-size: 5vh;
+    font-weight: bold;
+    font-family: '36 Days', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-left a:hover {
+    transform: scale(1.2) rotate(5deg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav-right {
@@ -228,7 +245,6 @@ section {
     backdrop-filter: blur(8px);
 }
 
-/* Projects Wrapper */
 .projects-container {
     width: 80vw;
     overflow-x: auto;
@@ -252,21 +268,42 @@ section {
 
 /* Project Cards */
 .project-card {
-    min-width: 20vw;
+    width: 22vw; /* Fixed width */
     background: #1e1e1e;
     padding: 2vw;
     border-radius: 1vw;
     text-align: center;
     box-shadow: 0 0.5vw 1vw rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .project-card img {
     width: 100%;
     height: 20vh;
     object-fit: cover;
+    object-position: top;
     border-radius: 1vw;
 }
 
+.project-card h3 {
+    margin: 1vw 0 0.5vw 0;
+    font-size: 1.2vw;
+    white-space: normal;
+}
+
+.project-card p {
+    font-size: 1vw;
+    line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 90%;
+    text-align: center;
+    white-space: normal;
+}
 /* --- Skills Section --- */
 .skills-container {
     display: flex;
