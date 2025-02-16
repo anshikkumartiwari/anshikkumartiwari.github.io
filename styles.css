@@ -7,16 +7,12 @@
     font-style: normal;
 }
 
-/* General Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
-/* --- Global Styles --- */
-
 
 body {
     background-color: #0d0d0d;
@@ -26,16 +22,16 @@ body {
     scroll-snap-type: y mandatory;
     height: 100vh;
     overflow: hidden;
-
 }
-h2{
+
+h2 {
     color: white;
     font-size: 3.5vh;
+    padding-bottom: 4vh;
+    padding-top: 2vh;
 }
 
-/* Background Canvas */
-canvas,
-#backgroundCanvas {
+canvas, #backgroundCanvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -45,7 +41,6 @@ canvas,
     background: black;
 }
 
-/* --- Navbar --- */
 nav {
     display: flex;
     justify-content: space-between;
@@ -54,27 +49,18 @@ nav {
     width: 100vw;
     top: 0;
     background: rgba(0, 0, 0, 0.7);
-    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 2;
 }
-.nav-left {
+
+.nav-left, .nav-left a {
     font-size: 5vh;
     font-weight: bold;
     font-family: '36 Days', sans-serif;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-}
-
-.nav-left a {
     text-decoration: none;
     color: inherit;
-    display: inline-block;
-    font-size: 5vh;
-    font-weight: bold;
-    font-family: '36 Days', sans-serif;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
 }
 
 .nav-left a:hover {
@@ -100,14 +86,12 @@ nav {
     color: #888;
 }
 
-/* Hide Navbar Links on Mobile */
 @media screen and (max-width: 750px) {
     .nav-right {
         display: none;
     }
 }
 
-/* --- Sections --- */
 section {
     width: 100vw;
     height: 100vh;
@@ -118,18 +102,15 @@ section {
     scroll-snap-align: start;
 }
 
-/* --- Landing Section --- */
 #landing {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
-    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(8px);
 }
-/* Centering Profile Container */
-/* Profile Container */
+
 .profile-container {
     display: flex;
     align-items: center;
@@ -140,48 +121,40 @@ section {
     padding: 0 5vw;
 }
 
-/* Profile Image */
 .profile-photo {
     width: 25vh;
     height: 25vh;
-    border-radius: 50%;
+    border-radius: 2%;
     object-fit: cover;
     position: relative;
     z-index: 1;
+    animation: roundify 1s ease forwards;
+    transition: border-radius 0.3s ease;
 }
 
-/* Animated Border (Black & White Gradient) */
-.profile-photo::before {
-    content: "";
-    position: absolute;
-    width: calc(100% + 10px);
-    height: calc(100% + 10px);
-    top: -5px;
-    left: -5px;
-    border-radius: 50%;
-    background: conic-gradient(black, white, black, white);
-    z-index: -1;
-    animation: rotate-border 3s linear infinite;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional glow */
-}
-
-/* Animation for Border Rotation */
-@keyframes rotate-border {
+@keyframes roundify {
     0% {
-        transform: rotate(0deg);
+        border-radius: 2%;
     }
     100% {
-        transform: rotate(360deg);
+        border-radius: 50%;
     }
 }
 
-/* Profile Info Styling */
+.profile-photo:hover {
+    border-radius: 2% !important;
+}
+
+
+
 .profile-info {
     color: white;
 }
+
 .profile-info h1 {
     font-size: 4vh;
 }
+
 .about-text {
     font-size: 2vh;
     color: #ccc;
@@ -189,11 +162,9 @@ section {
     margin-top: 1vh;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 750px) {
     .profile-container {
         margin-top: 3vh;
-        display: flex;
         flex-direction: column;
     }
     .profile-photo {
@@ -205,18 +176,13 @@ section {
     }
     .about-text {
         font-size: 1.7vh;
-        color: #ccc;
         max-width: 70vw;
-        margin-top: 1vh;
     }
 }
 
-
-
-
 .dice-container {
-    width: 100px; /* Adjust size as needed */
-    height: 100px; /* Adjust size as needed */
+    width: 100px;
+    height: 100px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -225,14 +191,11 @@ section {
     cursor: pointer;
 }
 
-
 #dice-3d {
     width: 100%;
     height: 100%;
 }
 
-
-/* --- Projects Section --- */
 .content-section {
     width: 100vw;
     height: 100vh;
@@ -241,7 +204,6 @@ section {
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.7);
-    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
 
@@ -264,11 +226,13 @@ section {
     display: flex;
     gap: 2vw;
     padding: 2vw;
+    height: 50vh;
+    perspective: 1000px;
+
 }
 
-/* Project Cards */
 .project-card {
-    width: 22vw; /* Fixed width */
+    width: 300px;
     background: #1e1e1e;
     padding: 2vw;
     border-radius: 1vw;
@@ -279,6 +243,16 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    transform-style: preserve-3d;
+    perspective: 1000px;   
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: perspective(1000px) translateZ(20px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
 }
 
 .project-card img {
@@ -287,24 +261,26 @@ section {
     object-fit: cover;
     object-position: top;
     border-radius: 1vw;
+    margin-bottom: 1vh;
 }
 
 .project-card h3 {
-    margin: 1vw 0 0.5vw 0;
-    font-size: 1.2vw;
+    margin: auto 0;
+    font-size: 2.2vh;
     white-space: normal;
 }
 
 .project-card p {
-    font-size: 1vw;
+    font-size: 2vh;
     line-height: 1.4;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    max-width: 90%;
+    max-width: 100%;
     text-align: center;
     white-space: normal;
+    margin: auto 0;
 }
-/* --- Skills Section --- */
+
 .skills-container {
     display: flex;
     flex-wrap: wrap;
@@ -333,6 +309,7 @@ section {
     padding: 20px;
     margin-bottom: 9vh;
 }
+
 .language-option {
     display: flex;
     align-items: center;
@@ -343,6 +320,7 @@ section {
     font-weight: bold;
     font-size: 18px;
 }
+
 .language-option img {
     width: 35px;
     height: 35px;
@@ -350,7 +328,6 @@ section {
     margin-right: 10px;
 }
 
-/* --- Contact Section --- */
 #contact {
     width: 100vw;
     height: 100vh;
@@ -360,16 +337,9 @@ section {
     flex-direction: column;
     gap: 2vh;
     background: rgba(0, 0, 0, 0.7);
-    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
 }
 
-/* Contact Containers */
-/* Contact Section */
-/* Hide Scrollbars */
-
-
-/* Contact Container */
 .contact-container {
     display: flex;
     flex-direction: column;
@@ -381,11 +351,10 @@ section {
     gap: 5vh;
 }
 
-#contact h2{
+#contact h2 {
     margin-top: 2vh;
 }
 
-/* Left Container: Website URLs */
 .contact-left ul {
     list-style: none;
     padding: 0;
@@ -400,17 +369,15 @@ section {
     text-decoration: none;
     font-size: 2vh;
     transition: color 0.3s ease-in-out;
-
 }
 
 .contact-left a:hover {
     color: #888;
 }
 
-/* Right Container: Social Links Stacked Vertically */
 .contact-right {
     display: flex;
-    flex-direction: column;  /* Stack vertically */
+    flex-direction: column;
     align-items: center;
     gap: 2vh;
 }
@@ -435,63 +402,28 @@ section {
     transform: scale(1.2);
 }
 
-/* Mobile Responsiveness */
 @media screen and (max-width: 750px) {
     .contact-container {
         flex-direction: column;
         gap: 3vh;
     }
-
     .contact-right a img {
         width: 5vw;
         height: 5vw;
     }
-
-    
-
+    .projects-wrapper {
+        height: 40vh;
+    }
+    .project-card {
+        width: 250px;
+    }
 }
 
-/* --- Footer --- */
 footer {
     padding: 2vh;
     background: rgba(0, 0, 0, 0.7);
-    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     text-align: center;
     font-size: 2vh;
+    color:#ccc;
 }
-
-/* --- Mobile Adjustments --- */
-
-
-/*
-
-@media screen and (max-width: 750px) {
-    .nav-right {
-        display:flex;
-        gap: 2vw;
-
-    }
-
-    .about-text {
-        max-width: 80vw;
-    }
-
-    .project-card {
-        min-width: 40vw;
-    }
-
-    .project-card img {
-        height: 15vh;
-    }
-
-    .skills-container {
-        gap: 5vw;
-    }
-
-    .contact-container {
-        flex-direction: column;
-        width: 90vw;
-    }
-}
-*/
