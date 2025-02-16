@@ -101,7 +101,7 @@ nav {
 }
 
 /* Hide Navbar Links on Mobile */
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 750px) {
     .nav-right {
         display: none;
     }
@@ -190,7 +190,7 @@ section {
 }
 
 /* Responsive Design */
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 750px) {
     .profile-container {
         margin-top: 3vh;
         display: flex;
@@ -436,7 +436,7 @@ section {
 }
 
 /* Mobile Responsiveness */
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 750px) {
     .contact-container {
         flex-direction: column;
         gap: 3vh;
@@ -466,7 +466,7 @@ footer {
 
 /*
 
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 750px) {
     .nav-right {
         display:flex;
         gap: 2vw;
