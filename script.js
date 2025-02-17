@@ -1,49 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const sections = document.querySelectorAll(".hidden");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("show");
-            }
-        });
-    }, { threshold: 0.2 });
+    const sections = Array.from(document.querySelectorAll("section"));
+    let currentIndex = 0;
 
-    sections.forEach(section => observer.observe(section));
+    function isTouchDevice() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
 
-    document.addEventListener("wheel", (event) => {
-        if (event.deltaY > 0) {
-            window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-        } else {
-            window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
-        }
-    });
-
-    let touchStartY = 0;
-    let touchEndY = 0;
-    const swipeThreshold = 50;
-
-    document.addEventListener("touchstart", (e) => {
-        touchStartY = e.touches[0].clientY;
-    });
-
-    document.addEventListener("touchend", (e) => {
-        touchEndY = e.changedTouches[0].clientY;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        let swipeDistance = touchEndY - touchStartY;
-
-        if (Math.abs(swipeDistance) > swipeThreshold) {
-            if (swipeDistance < 0) {
-                window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-            } else {
-                window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
-            }
+    function scrollToSection(index) {
+        if (index >= 0 && index < sections.length) {
+            sections[index].scrollIntoView({ behavior: "smooth" });
+            currentIndex = index;
         }
     }
 
-    document.body.style.overflow = "hidden";
+    if (!isTouchDevice()) {
+        document.addEventListener("wheel", (event) => {
+            event.preventDefault(); // Prevent default scrolling
+            if (event.deltaY > 0) {
+                scrollToSection(currentIndex + 1);
+            } else {
+                scrollToSection(currentIndex - 1);
+            }
+        }, { passive: false });
+
+        document.body.style.overflow = "hidden"; // Prevents normal scrolling on desktop
+    } else {
+        document.body.style.overflow = "auto"; // Allows normal scrolling on touch devices
+    }
 
     fetch("skills.html")
         .then(response => response.text())
@@ -156,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("landing").scrollIntoView({ behavior: "smooth" });
             setTimeout(() => loadCanvasScript(activeCanvas), 600);
         } else {
-            loadCanvasScript(activeCanvas); // Always switch canvas, even in contact section
+            loadCanvasScript(activeCanvas);
         }
     });
 });

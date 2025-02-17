@@ -26,7 +26,7 @@ body {
 
 h2 {
     color: white;
-    font-size: 3.5vh;
+    font-size: 3.8vh;
     padding-bottom: 4vh;
     padding-top: 2vh;
 }
@@ -68,6 +68,8 @@ nav {
     cursor: pointer;
     text-decoration: none;
     color: inherit;
+    padding-left: 1vw;
+    padding-right: 1vh;
 }
 
 .nav-left a:hover {
@@ -95,7 +97,7 @@ nav {
 
 @media screen and (max-width: 750px) {
     .nav-right {
-        display: none;
+        padding-right: 1vw;
     }
 }
 
@@ -329,7 +331,7 @@ section {
 
 #contact {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh; /* Change from height to min-height */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -337,6 +339,8 @@ section {
     gap: 2vh;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(5px);
+    padding-bottom: 2vh; /* Add padding to leave space for the footer */
+    position: relative; /* Make it a positioning context for the footer */
 }
 
 .contact-container {
@@ -347,11 +351,11 @@ section {
     flex-wrap: wrap;
     width: 80vw;
     margin: 0vh auto;
-    gap: 5vh;
+    gap: 6vh;
 }
 
 #contact h2 {
-    margin-top: 2vh;
+    margin-top: 0vh;
 }
 
 .contact-left ul {
@@ -419,10 +423,16 @@ section {
 }
 
 footer {
-    padding: 2vh;
+    position: absolute; /* Position the footer absolutely within the #contact section */
+    bottom: 2vh; /* Leave a 2vh margin from the bottom */
+    left: 0;
+    right: 0;
+    padding-top: 1vh;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
     text-align: center;
-    font-size: 2vh;
-    color:#ccc;
+    font-size: 1.8vh;
+    color: #ccc;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }

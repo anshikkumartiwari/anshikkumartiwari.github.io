@@ -4,17 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let isScrolling = false;
     let scrollSpeed = 0;
 
+    // Smooth Auto-Scroll on Mouse Move
     container.addEventListener("mousemove", function (event) {
         const { left, width } = container.getBoundingClientRect();
         const mouseX = event.clientX - left;
         const centerX = width / 2;
 
-        // Determine scroll speed based on mouse position
-        if (mouseX < centerX) {
-            scrollSpeed = -((centerX - mouseX) / centerX) * 5;
-        } else {
-            scrollSpeed = ((mouseX - centerX) / centerX) * 5;
-        }
+        scrollSpeed = (mouseX - centerX) / centerX * 5;
 
         if (!isScrolling) {
             isScrolling = true;
@@ -31,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Allow manual scrolling with mouse/touchpad
+    // Mouse Drag Scrolling
     let isDragging = false;
     let startX, scrollLeft;
 
@@ -40,11 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
         startX = e.pageX - container.offsetLeft;
         scrollLeft = container.scrollLeft;
         container.style.cursor = "grabbing";
-    });
-
-    container.addEventListener("mouseleave", () => {
-        isDragging = false;
-        container.style.cursor = "grab";
     });
 
     container.addEventListener("mouseup", () => {
@@ -56,22 +47,42 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!isDragging) return;
         e.preventDefault();
         const x = e.pageX - container.offsetLeft;
-        const walk = (x - startX) * 2; // Adjust speed
+        const walk = (x - startX) * 2;
         container.scrollLeft = scrollLeft - walk;
     });
 
-    // Enable touch support for mobile users
-    let touchStartX, touchScrollLeft;
+    // **Smooth Swipe Scrolling with Momentum**
+    let touchStartX = 0;
+    let touchScrollLeft = 0;
+    let velocity = 0;
+    let rafId = null;
+
+    function easeOut() {
+        if (Math.abs(velocity) < 0.1) {
+            cancelAnimationFrame(rafId);
+            return;
+        }
+        container.scrollLeft += velocity;
+        velocity *= 0.95; // Smooth out momentum
+        rafId = requestAnimationFrame(easeOut);
+    }
 
     container.addEventListener("touchstart", (e) => {
-        touchStartX = e.touches[0].pageX - container.offsetLeft;
+        cancelAnimationFrame(rafId); // Stop previous inertia
+        touchStartX = e.touches[0].pageX;
         touchScrollLeft = container.scrollLeft;
+        velocity = 0; 
     });
 
     container.addEventListener("touchmove", (e) => {
-        if (!touchStartX) return;
-        const touchX = e.touches[0].pageX - container.offsetLeft;
-        const walk = (touchX - touchStartX) * 2; // Adjust speed
-        container.scrollLeft = touchScrollLeft - walk;
+        const touchX = e.touches[0].pageX;
+        const deltaX = touchX - touchStartX;
+        container.scrollLeft = touchScrollLeft - deltaX;
+        velocity = -deltaX * 0.8; // Capture swipe speed
+        touchStartX = touchX;
+    });
+
+    container.addEventListener("touchend", () => {
+        rafId = requestAnimationFrame(easeOut); // Apply inertia scrolling
     });
 });
