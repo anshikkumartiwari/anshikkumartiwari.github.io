@@ -50,6 +50,7 @@ nav {
     top: 0;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1;
 }
 
@@ -118,6 +119,7 @@ section {
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .profile-container {
@@ -163,6 +165,34 @@ section {
     margin-top: 1vh;
 }
 
+.resume-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #333;
+    padding: 1vh 1.5vh;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 2vh;
+    font-size: 1.8vh;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.resume-btn:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.download-icon {
+    margin-right: 0.5vw;
+    stroke: #333;
+}
+
 @media screen and (max-width: 750px) {
     .profile-container {
         margin-top: 3vh;
@@ -178,6 +208,11 @@ section {
     .about-text {
         font-size: 1.7vh;
         max-width: 70vw;
+    }
+    .resume-btn {
+        padding: 1vh 3vw;
+        font-size: 1.6vh;
+        margin-top: 1.5vh;
     }
 }
 
@@ -206,6 +241,7 @@ section {
     justify-content: center;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .projects-container {
@@ -339,6 +375,7 @@ section {
     gap: 2vh;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     padding-bottom: 2vh; /* Add padding to leave space for the footer */
     position: relative; /* Make it a positioning context for the footer */
 }
@@ -430,6 +467,7 @@ footer {
     padding-top: 1vh;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     text-align: center;
     font-size: 1.8vh;
     color: #ccc;
