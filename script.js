@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
    THEME
    ========================================================================== */
 function initTheme() {
+  const sw = document.querySelector(".theme-sw");
   const btns = document.querySelectorAll(".theme-btn");
 
   function apply(t) {
@@ -29,7 +30,27 @@ function initTheme() {
   }
 
   apply(localStorage.getItem("theme") || "system");
-  btns.forEach(b => b.addEventListener("click", () => apply(b.dataset.theme)));
+
+  // On mobile, tap collapsed active theme to expand, tap again to select & collapse
+  btns.forEach(b => {
+    b.addEventListener("click", e => {
+      const isMobile = window.innerWidth <= 720;
+      if (isMobile && sw && !sw.classList.contains("open")) {
+        e.stopPropagation();
+        sw.classList.add("open");
+        return;
+      }
+      apply(b.dataset.theme);
+      if (isMobile && sw) {
+        sw.classList.remove("open");
+      }
+    });
+  });
+
+  // Clicking outside theme switcher collapses it
+  document.addEventListener("click", () => {
+    if (sw) sw.classList.remove("open");
+  });
 
   window.matchMedia("(prefers-color-scheme:dark)").addEventListener("change", () => {
     if ((localStorage.getItem("theme") || "system") === "system") apply("system");
