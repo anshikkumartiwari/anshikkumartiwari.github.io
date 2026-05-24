@@ -402,34 +402,34 @@ html[data-theme="dark"] .resume-btn:hover {
 /* Glowing check mark badge */
 .glowing-check {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 17px;
-  height: 17px;
+  top: -7px;
+  right: -7px;
+  width: 20px;
+  height: 20px;
   background: #10B981;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
   border: 1.5px solid var(--bg);
-  animation: pulse-green 2s infinite alternate;
+  animation: pulse-green 1.8s infinite alternate ease-in-out;
 }
 .glowing-check svg {
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
   fill: #fff;
   display: block;
 }
 
 @keyframes pulse-green {
   0% {
-    box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.35);
     transform: scale(1);
   }
   100% {
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.8), 0 0 4px rgba(16, 185, 129, 0.4);
-    transform: scale(1.05);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.75), 0 0 4px rgba(16, 185, 129, 0.35);
+    transform: scale(1.04);
   }
 }
 .cert-icon {
