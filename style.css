@@ -127,7 +127,13 @@ html[data-theme="dark"] .nav { background: rgba(17,17,16,.92); }
   padding: 0 2rem;
   display: flex; align-items: center; justify-content: space-between;
 }
-.nav-logo img { height: 26px; display: block; }
+.nav-logo-svg {
+  height: 26px;
+  width: auto;
+  display: block;
+  fill: var(--accent);
+  transition: fill var(--t-normal);
+}
 
 .nav-right { display: flex; align-items: center; gap: 1rem; }
 
