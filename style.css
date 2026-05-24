@@ -257,6 +257,7 @@ html[data-theme="dark"] .nav { background: rgba(17,17,16,.92); }
   width: 40px; height: 40px; min-width: 40px;
   border-radius: 4px; background: var(--surface); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
   transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
 }
 .tl-icon svg { width: 20px; height: 20px; }
@@ -359,6 +360,7 @@ html[data-theme="dark"] .nav { background: rgba(17,17,16,.92); }
   width: 36px; height: 36px; min-width: 36px;
   border-radius: 4px; background: var(--bg); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
 }
 .cert-icon svg { width: 18px; height: 18px; }
 .cert-name   { font-family: var(--f-head); font-weight: 700; font-size: .88rem; line-height: 1.3; }
