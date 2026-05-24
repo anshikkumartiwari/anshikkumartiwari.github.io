@@ -391,9 +391,44 @@ html[data-theme="dark"] .resume-btn:hover {
   display: flex; align-items: center; gap: .65rem;
   background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
   padding: .6rem .8rem;
+  position: relative;
   transition: border-color var(--t-fast);
 }
 .cert:hover { border-color: var(--accent); }
+
+/* Glowing check mark badge */
+.glowing-check {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 17px;
+  height: 17px;
+  background: #10B981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  border: 1.5px solid var(--bg);
+  animation: pulse-green 2s infinite alternate;
+}
+.glowing-check svg {
+  width: 11px;
+  height: 11px;
+  fill: #fff;
+  display: block;
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.8), 0 0 4px rgba(16, 185, 129, 0.4);
+    transform: scale(1.05);
+  }
+}
 .cert-icon {
   width: 36px; height: 36px; min-width: 36px;
   border-radius: 4px; background: var(--bg); border: 1px solid var(--border);
