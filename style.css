@@ -262,6 +262,9 @@ html[data-theme="dark"] .nav { background: rgba(17,17,16,.92); }
   fill: currentColor;
   flex-shrink: 0;
 }
+.resume-wrap {
+  display: inline-flex;
+}
 html[data-theme="dark"] .resume-btn:hover {
   box-shadow: 0 4px 12px rgba(224, 160, 112, 0.15);
 }
@@ -500,6 +503,7 @@ html[data-theme="dark"] .resume-btn:hover {
   .hero-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
   .hero-photo { max-width: 140px; border-radius: 50%; aspect-ratio: 1; margin: 0 auto; }
   .hero-links { justify-content: center; }
+  .resume-wrap { flex-basis: 100%; justify-content: center; margin-top: .75rem; display: flex; }
   .hero-bio { margin-left: auto; margin-right: auto; }
 
   .exp-grid    { grid-template-columns: 1fr; gap: 2.5rem; }
