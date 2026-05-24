@@ -218,6 +218,53 @@ section.active-in-view .section-container {
 }
 
 /* ==========================================================================
+   SCROLL BOUNDARY CUE (Subtle Phase Transition Indicator)
+   ========================================================================== */
+.scroll-boundary-cue {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.75rem var(--spacing-md);
+  opacity: 0;
+  transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 10;
+  /* Subtle upward gradient mask to integrate with background */
+  background: linear-gradient(to top, var(--background) 40%, transparent);
+}
+
+.scroll-boundary-cue.visible {
+  opacity: 0.25;
+}
+
+.scroll-boundary-cue.at-top {
+  bottom: auto;
+  top: var(--scroll-margin-top);
+  background: linear-gradient(to bottom, var(--background) 40%, transparent);
+  transform: rotate(180deg);
+}
+
+.scroll-boundary-cue-label {
+  font-family: var(--font-code);
+  font-size: var(--label-size);
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.scroll-boundary-cue-arrow {
+  width: 12px;
+  height: 12px;
+  fill: var(--text-secondary);
+}
+
+/* ==========================================================================
    STICKY NAVBAR
    ========================================================================== */
 .navbar {
