@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting — Anshik Kumar Tiwari</title>
+  <script>
+    (async function() {
+      const path = window.location.pathname;
+      const segments = path.split('/').filter(Boolean);
+      
+      let repoPrefix = '';
+      const isSubpath = segments.length > 0 && (segments[0] === 'portfolio' || segments[0] === 'anshikkumartiwari.github.io');
+      if (isSubpath) {
+        repoPrefix = '/' + segments[0];
+      }
+
+      const offset = isSubpath ? 1 : 0;
+      const remainingSegments = segments.slice(offset);
+
+      // Rule 1: Redirect /blogs or /blogs/ to blogs.html
+      if (remainingSegments.length === 1 && remainingSegments[0] === 'blogs') {
+        window.location.replace(`${repoPrefix}/blogs.html`);
+        return;
+      }
+
+      // Rule 2: Redirect /blogs/title-slug to pages/article.html?a=article-file
+      if (remainingSegments.length >= 2 && remainingSegments[0] === 'blogs') {
+        const slug = remainingSegments[1];
+        try {
+          const res = await fetch(`${repoPrefix}/blogs/manifest.json`);
+          if (res.ok) {
+            const manifest = await res.json();
+            
+            function generateSlug(text) {
+              return text
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            }
+            
+            const match = manifest.find(item => generateSlug(item.title) === slug);
+            if (match) {
+              window.location.replace(`${repoPrefix}/pages/article.html?a=${match.file}`);
+              return;
+            }
+          }
+        } catch (e) {
+          console.error("404 routing error:", e);
+        }
+      }
+
+      // If no valid route found, redirect back to home index
+      window.location.replace(`${repoPrefix || '/'}`);
+    })();
+  </script>
+</head>
+<body>
+  <p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center; margin-top: 5rem; color: #6B655F;">
+    Redirecting...
+  </p>
+</body>
+</html>

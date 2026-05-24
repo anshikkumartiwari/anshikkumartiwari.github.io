@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Article... — Anshik Kumar Tiwari</title>
+  
+  <!-- Critical CSS variables & styling -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/article.css">
+  <link rel="icon" type="image/svg+xml" href="../images/A.svg">
+  
+  <!-- Immediate Theme Initialization to prevent flash of wrong theme -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem("theme") || "system";
+      if (theme !== "system") {
+        document.documentElement.setAttribute("data-theme", theme);
+      }
+    })();
+  </script>
+</head>
+<body class="article-page">
+
+  <!-- Navbar placeholder for visual consistency -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo" aria-label="Home">
+        <svg class="nav-logo-svg" viewBox="0 0 78.7 73">
+          <path d="M 48.4 71.5 L 78.7 71.5 L 37.4 0 L 22.3 26.1 L 48.4 71.5 Z M 16.5 73 C 25.5 73 32.8 65.6 32.8 56.7 C 32.8 47.6 25.5 40.2 16.5 40.2 C 7.4 40.2 0 47.6 0 56.7 C 0 65.6 7.4 73 16.5 73 Z" fill-rule="evenodd" />
+        </svg>
+      </a>
+      
+      <div class="nav-right">
+        <!-- Back link -->
+        <a href="../blogs.html" class="dd-trigger nav-blog-link" style="font-weight: 500;">
+          Blogs <span class="nav-blog-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <!-- Back Button -->
+    <a href="../index.html#blogs" class="article-back-btn" id="back-button">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 12H4M10 18l-6-6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Back to Portfolio</span>
+    </a>
+
+    <!-- Loading State -->
+    <div id="loading" style="text-align: center; padding: 4rem 0; color: var(--muted); font-family: var(--f-mono); font-size: 0.9rem;">
+      Parsing article contents...
+    </div>
+
+    <!-- Main Content Area (hidden by default) -->
+    <article id="article-content" style="display: none;">
+      <header class="article-header">
+        <h1 class="article-page-title" id="meta-title">Article Title</h1>
+        <p class="article-page-subtitle" id="meta-subtitle">Sub-description goes here</p>
+        
+        <div class="article-author-card">
+          <img src="../images/profile.jpg" alt="Author" class="article-author-img" id="meta-author-img">
+          <div class="article-author-info">
+            <span class="article-author-name" id="meta-author">Author Name</span>
+            <div class="article-meta-row">
+              <span id="meta-date">Date</span>
+              <span class="article-meta-sep">•</span>
+              <span id="meta-readtime">10 min read</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="article-body" id="rendered-body">
+        <!-- Rendered markdown outputs here -->
+      </div>
+    </article>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer" style="border-top: 1px solid var(--border); margin-top: 6rem;">
+    <span>&copy; 2026 Anshik Kumar Tiwari</span>
+  </footer>
+
+  <!-- Marked.js Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Article Loader Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadArticle();
+      setupBackButton();
+    });
+
+    function setupBackButton() {
+      // Dynamic back button helper
+      const backBtn = document.getElementById("back-button");
+      if (document.referrer && document.referrer.includes(window.location.hostname)) {
+        backBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          window.history.back();
+        });
+      }
+    }
+
+    function generateSlug(text) {
+      return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    }
+
+    function parseFrontMatter(text) {
+      const regex = /^---\r?\n([\s\S]*?)\r?\n---/;
+      const match = text.match(regex);
+      const metadata = {};
+      let bodyContent = text;
+
+      if (match) {
+        bodyContent = text.replace(match[0], '').trim();
+        const yaml = match[1];
+        const lines = yaml.split('\n');
+        for (const line of lines) {
+          const colonIdx = line.indexOf(':');
+          if (colonIdx !== -1) {
+            const key = line.slice(0, colonIdx).trim();
+            let val = line.slice(colonIdx + 1).trim();
+            // strip surrounding quotes
+            val = val.replace(/^['"]|['"]$/g, '');
+            metadata[key] = val;
+          }
+        }
+      }
+      return { metadata, bodyContent };
+    }
+
+    async function loadArticle() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let articleFile = urlParams.get("a") || "article1.md";
+
+      if (!articleFile.endsWith(".md")) {
+        articleFile += ".md";
+      }
+
+      try {
+        // 1. Fetch manifest to load correct metadata for the header
+        let metadata = {
+          title: "Untitled Article",
+          subtitle: "",
+          date: "",
+          readTime: ""
+        };
+
+        try {
+          const mRes = await fetch('../blogs/manifest.json');
+          if (mRes.ok) {
+            const manifest = await mRes.json();
+            const match = manifest.find(item => item.file === articleFile);
+            if (match) {
+              metadata = match;
+            }
+          }
+        } catch (e) {
+          console.warn("Failed to load manifest", e);
+        }
+
+        // 2. Fetch the body content from template.md (the default)
+        const response = await fetch(`../blogs/template.md`);
+        if (!response.ok) {
+          throw new Error(`Failed to load default template: ${response.statusText}`);
+        }
+        
+        const rawMarkdown = await response.text();
+        const { bodyContent } = parseFrontMatter(rawMarkdown);
+
+        // Render metadata (from manifest)
+        document.getElementById("meta-title").textContent = metadata.title;
+        
+        if (metadata.subtitle) {
+          document.getElementById("meta-subtitle").textContent = metadata.subtitle;
+          document.getElementById("meta-subtitle").style.display = "block";
+        } else {
+          document.getElementById("meta-subtitle").style.display = "none";
+        }
+
+        document.getElementById("meta-author").textContent = "Anshik Kumar Tiwari";
+        document.getElementById("meta-author-img").src = "../images/profile.jpg";
+        
+        document.getElementById("meta-date").textContent = metadata.date || "";
+        document.getElementById("meta-readtime").textContent = metadata.readTime || "";
+
+        // Update Document Head Info
+        document.title = `${metadata.title} — Anshik Kumar Tiwari`;
+
+        // Render Markdown body (from template)
+        const renderedHtml = marked.parse(bodyContent);
+        document.getElementById("rendered-body").innerHTML = renderedHtml;
+
+        // Hide loading, show article
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("article-content").style.display = "block";
+
+        // Elegantly update browser address bar URL to /blogs/title-slug
+        const titleSlug = generateSlug(metadata.title);
+        const targetUrlPath = `../blogs/${titleSlug}`;
+        
+        window.history.replaceState({ article: articleFile }, '', targetUrlPath);
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("loading").innerHTML = `
+          <div style="color: var(--accent); font-weight: 500; margin-bottom: 1rem;">Unable to load article</div>
+          <p style="font-size: 0.85rem; max-width: 400px; margin: 0 auto;">Please return to the home page.</p>
+          <a href="../index.html#blogs" class="resume-btn" style="margin-top: 1.5rem;">Return Home</a>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

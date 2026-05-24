@@ -1,0 +1,26 @@
+[
+  {
+    "file": "article1.md",
+    "title": "My experience with interview at flipkart",
+    "subtitle": "A personal review of the software engineering interview process and technical rounds",
+    "date": "Apr 7, 2026",
+    "readTime": "11 min read",
+    "description": "A walkthrough of my interview experience at Flipkart. I discuss the technical problem-solving rounds, system design questions, and the key preparation strategies that helped me navigate the process."
+  },
+  {
+    "file": "article2.md",
+    "title": "My experience with interview at Trademarkia",
+    "subtitle": "Inside the developer hiring process at a major trademark search platform",
+    "date": "Mar 12, 2026",
+    "readTime": "5 min read",
+    "description": "A detailed look at my interview rounds at Trademarkia. Focuses on NLP topic modeling questions, vector database design, and real-time FastAPI integration challenges."
+  },
+  {
+    "file": "article3.md",
+    "title": "Journey in quant",
+    "subtitle": "Reflections on mathematical modeling, quant finance challenges, and alpha generation",
+    "date": "Feb 28, 2026",
+    "readTime": "7 min read",
+    "description": "My personal path into quantitative finance and alpha modeling. I share the key mathematical concepts, coding exercises, and competition strategies that shaped my understanding of the quant landscape."
+  }
+]
