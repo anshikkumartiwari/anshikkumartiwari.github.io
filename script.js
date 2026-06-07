@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initDropdown();
   initNavHighlight();
   initBlogs();
+  initContactForm();
 });
 
 /* ==========================================================================
@@ -247,5 +248,148 @@ async function loadBlogList(container) {
     `;
   }).join('');
 }
+
+/* ==========================================================================
+   CONTACT FORM & ROUTING
+   ========================================================================== */
+function initContactForm() {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+
+  const keyInput = document.getElementById("routing-key");
+  const statusDiv = document.getElementById("form-status");
+  const submitBtn = document.getElementById("submit-btn");
+  const submitBtnText = submitBtn.querySelector("span");
+
+  const GIST_CONFIG_URL = "https://gist.githubusercontent.com/anshikkumartiwari/411bf1cc9a493fdc29acee08e8e8292f/raw/routing-config.json";
+  const SUBMIT_ENDPOINT = "https://api.web3forms.com/submit";
+  const COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes rate limit
+  
+  let routingToken = "";
+
+  // Helper to show messages in form-status
+  function setStatus(msg, type = "") {
+    statusDiv.textContent = msg;
+    statusDiv.className = "form-status";
+    if (type) {
+      statusDiv.classList.add(type);
+    }
+  }
+
+  // 1. Asynchronously fetch the routing configuration from the public Gist
+  async function fetchConfig() {
+    try {
+      const response = await fetch(GIST_CONFIG_URL);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.routing_token) {
+          routingToken = data.routing_token;
+          if (keyInput) keyInput.value = routingToken;
+        }
+      }
+    } catch (err) {
+      console.warn("Unable to fetch routing configuration asynchronously.", err);
+    }
+  }
+
+  // Start fetching the key immediately on load
+  fetchConfig();
+
+  // 2. Handle form submission
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Client-side Rate Limiting check
+    const lastSubmit = localStorage.getItem("last_contact_submit");
+    if (lastSubmit) {
+      const elapsed = Date.now() - parseInt(lastSubmit, 10);
+      if (elapsed < COOLDOWN_MS) {
+        const remainingSec = Math.ceil((COOLDOWN_MS - elapsed) / 1000);
+        const minutes = Math.floor(remainingSec / 60);
+        const seconds = remainingSec % 60;
+        const timeString = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+        setStatus(`Please wait ${timeString} before sending another message.`, "warning");
+        return;
+      }
+    }
+
+    // Honey pot spam prevention
+    const botcheck = form.querySelector('input[name="botcheck"]');
+    if (botcheck && botcheck.checked) {
+      console.warn("Spam detected.");
+      setStatus("Message processed.", "success");
+      form.reset();
+      return;
+    }
+
+    // Ensure we have a routing token
+    if (!routingToken) {
+      setStatus("Initializing connection...", "warning");
+      await fetchConfig();
+      if (!routingToken) {
+        setStatus("Unable to route message. Please try again later.", "error");
+        return;
+      }
+    }
+
+    // Set UI to loading/disabled state
+    submitBtn.disabled = true;
+    submitBtn.classList.add("sending");
+    submitBtnText.textContent = "Sending...";
+    setStatus("");
+
+    // Update subject line dynamically with sender name
+    const subjectField = document.getElementById("form-subject");
+    const senderName = document.getElementById("form-name")?.value.trim();
+    if (subjectField && senderName) {
+      subjectField.value = `Anshik! you've a message from ${senderName}`;
+    }
+
+    // Submit payload
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch(SUBMIT_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json"
+        },
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (response.status === 200 || result.success) {
+        setStatus("Message sent successfully! ✨", "success");
+        form.reset();
+        
+        // Save submit timestamp to localStorage for rate limiting
+        localStorage.setItem("last_contact_submit", Date.now().toString());
+
+        submitBtn.classList.remove("sending");
+        submitBtn.classList.add("success");
+        submitBtnText.textContent = "Sent!";
+        setTimeout(() => {
+          submitBtn.classList.remove("success");
+          submitBtnText.textContent = "Send";
+          submitBtn.disabled = false;
+          setStatus("");
+        }, 4000);
+      } else {
+        setStatus(result.message || "Something went wrong. Please try again.", "error");
+        submitBtn.classList.remove("sending");
+        submitBtn.disabled = false;
+        submitBtnText.textContent = "Send";
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      setStatus("Connection error. Please try again.", "error");
+      submitBtn.classList.remove("sending");
+      submitBtn.disabled = false;
+      submitBtnText.textContent = "Send";
+    }
+  });
+}
+
 
 

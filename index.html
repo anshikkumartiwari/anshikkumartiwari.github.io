@@ -410,14 +410,40 @@
 
 <!-- ── 06 THANKS ────────────────────────────────────────────────────────── -->
 <section id="thanks">
-  <div class="wrap">
-    <span class="thanks-num">06 /</span>
-    <h2 class="thanks-head">Thank you.</h2>
-    <p class="thanks-sub">I appreciate you taking the time to explore my work. If you're interested in data systems, quantitative modelling, or AWS solution design — let's talk.</p>
-    <a href="mailto:anshikkumartiwari@gmail.com" class="thanks-btn">
-      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-      Get in touch
-    </a>
+  <div class="wrap thanks-grid">
+    <div class="thanks-info">
+      <span class="thanks-num">06 /</span>
+      <h2 class="thanks-head">Thank you.</h2>
+      <p class="thanks-sub">I appreciate you taking the time to explore my work. If you're interested in data systems, quantitative modelling, or AWS solution design — let's talk.</p>
+    </div>
+
+    <div class="contact-form-container">
+      <form id="contact-form" class="contact-form" autocomplete="on">
+        <!-- Hidden input for the token loaded asynchronously from gist -->
+        <input type="hidden" name="access_key" id="routing-key" value="">
+        <!-- Honey pot spam prevention -->
+        <input type="checkbox" name="botcheck" class="hidden-field" style="display: none;">
+        <!-- Email metadata settings -->
+        <input type="hidden" name="subject" id="form-subject" value="Anshik! you've a message from Visitor">
+        <input type="hidden" name="from_name" value="Portfolio webform">
+        
+        <div class="form-group">
+          <input type="text" name="name" id="form-name" placeholder="Name" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" id="form-email" placeholder="Email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <textarea name="message" id="form-message" placeholder="Message" required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn" id="submit-btn">
+          <span>Send</span>
+        </button>
+        
+        <div id="form-status" class="form-status"></div>
+      </form>
+    </div>
   </div>
 </section>
 
