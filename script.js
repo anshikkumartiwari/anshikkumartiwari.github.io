@@ -15,8 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
    THEME
    ========================================================================== */
 function initTheme() {
-  const sw = document.querySelector(".theme-sw");
-  const btns = document.querySelectorAll(".theme-btn");
+  const dd = document.getElementById("theme-dd");
+  if (!dd) return;
+  const trigger = dd.querySelector(".dd-trigger");
+  const btns = dd.querySelectorAll(".theme-btn");
+  const activeIcon = document.getElementById("theme-active-icon");
 
   function apply(t) {
     t === "system"
@@ -27,30 +30,40 @@ function initTheme() {
       const on = b.dataset.theme === t;
       b.classList.toggle("active", on);
       b.setAttribute("aria-pressed", String(on));
+      if (on && activeIcon) {
+        activeIcon.innerHTML = b.querySelector("svg").outerHTML;
+      }
     });
   }
 
   apply(localStorage.getItem("theme") || "system");
 
-  // On mobile, tap collapsed active theme to expand, tap again to select & collapse
+  trigger.addEventListener("click", e => {
+    e.stopPropagation();
+    const open = dd.classList.toggle("open");
+    trigger.setAttribute("aria-expanded", String(open));
+    document.getElementById("section-dd")?.classList.remove("open");
+  });
+
   btns.forEach(b => {
     b.addEventListener("click", e => {
-      const isMobile = window.innerWidth <= 720;
-      if (isMobile && sw && !sw.classList.contains("open")) {
-        e.stopPropagation();
-        sw.classList.add("open");
-        return;
-      }
+      e.stopPropagation();
       apply(b.dataset.theme);
-      if (isMobile && sw) {
-        sw.classList.remove("open");
-      }
+      dd.classList.remove("open");
+      trigger.setAttribute("aria-expanded", "false");
     });
   });
 
-  // Clicking outside theme switcher collapses it
   document.addEventListener("click", () => {
-    if (sw) sw.classList.remove("open");
+    dd.classList.remove("open");
+    trigger.setAttribute("aria-expanded", "false");
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      dd.classList.remove("open");
+      trigger.setAttribute("aria-expanded", "false");
+    }
   });
 
   window.matchMedia("(prefers-color-scheme:dark)").addEventListener("change", () => {
@@ -71,6 +84,7 @@ function initDropdown() {
     e.stopPropagation();
     const open = dd.classList.toggle("open");
     trigger.setAttribute("aria-expanded", String(open));
+    document.getElementById("theme-dd")?.classList.remove("open");
   });
   document.addEventListener("click",   ()  => dd.classList.remove("open"));
   document.addEventListener("keydown",  e  => e.key === "Escape" && dd.classList.remove("open"));
@@ -120,7 +134,6 @@ function initBlogs() {
   if (!blogList) return;
 
   loadBlogList(blogList);
-  setupBlogScrollOwnership(blogList);
 }
 
 function generateSlug(text) {
@@ -235,37 +248,4 @@ async function loadBlogList(container) {
   }).join('');
 }
 
-function setupBlogScrollOwnership(list) {
-  let lastScrollTime = 0;
-  let isExhausted = false;
-  let allowedOut = false;
 
-  list.addEventListener("wheel", (e) => {
-    const scrollTop = list.scrollTop;
-    const scrollHeight = list.scrollHeight;
-    const clientHeight = list.clientHeight;
-    const delta = e.deltaY;
-    const now = Date.now();
-
-    if (now - lastScrollTime > 400) {
-      isExhausted = false;
-      allowedOut = false;
-    }
-    lastScrollTime = now;
-
-    const atBottom = delta > 0 && (scrollTop + clientHeight >= scrollHeight - 1);
-    const atTop = delta < 0 && scrollTop <= 0;
-
-    if (atBottom || atTop) {
-      if (!isExhausted) {
-        isExhausted = true;
-        e.preventDefault();
-      } else if (!allowedOut) {
-        e.preventDefault();
-      }
-    } else {
-      isExhausted = false;
-      allowedOut = false;
-    }
-  }, { passive: false });
-}

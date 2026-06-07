@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anshik Kumar Tiwari — Thoughtful Engineer</title>
+  <title>Anshik Kumar Tiwari</title>
   <meta name="description" content="Personal portfolio of Anshik Kumar Tiwari - final year CS Student at VIT Chennai. Experience in data analysis, SQL, Python, and AWS. Built ML pipelines, worked with React.js and FastAPI, and published research on ML-based data redaction. Passionate about quantitative modelling and thoughtful software design.">
   <link rel="icon" type="image/svg+xml" href="images/A.svg">
   <link rel="stylesheet" href="style.css">
@@ -32,21 +32,37 @@
           <li><a class="dd-item"        href="#projects"     role="option">Projects</a></li>
           <li><a class="dd-item"        href="#achievements" role="option">Credentials</a></li>
           <li><a class="dd-item"        href="#blogs"        role="option">Blogs</a></li>
-          <li><a class="dd-item"        href="#thanks"       role="option">Thanks</a></li>
         </ul>
       </div>
 
-      <!-- Theme -->
-      <div class="theme-sw" role="radiogroup" aria-label="Theme">
-        <button class="theme-btn" data-theme="light" title="Light" aria-label="Light theme">
-          <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+      <!-- Theme Dropdown -->
+      <div class="dd" id="theme-dd">
+        <button class="dd-trigger" aria-haspopup="listbox" aria-expanded="false" title="Theme" aria-label="Theme switcher">
+          <span id="theme-active-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+          </span>
+          <span class="dd-arrow" aria-hidden="true">▼</span>
         </button>
-        <button class="theme-btn" data-theme="dark" title="Dark" aria-label="Dark theme">
-          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="theme-btn active" data-theme="system" title="System" aria-label="System preference">
-          <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
-        </button>
+        <ul class="dd-menu" role="listbox" style="min-width: 120px; right: 0;">
+          <li>
+            <button class="dd-item theme-btn" data-theme="light" role="option">
+              <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L18.36 18.01zM19.42 7.05c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+              <span>Light</span>
+            </button>
+          </li>
+          <li>
+            <button class="dd-item theme-btn" data-theme="dark" role="option">
+              <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span>Dark</span>
+            </button>
+          </li>
+          <li>
+            <button class="dd-item theme-btn" data-theme="system" role="option">
+              <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+              <span>System</span>
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -310,9 +326,9 @@
             <p class="ach-desc">Competed across quantitative modelling and analytical problem-solving rounds against top-tier participants nationally.</p>
           </div>
           <div class="ach-item">
-            <div class="ach-label">IEEE Research Publication</div>
-            <h4 class="ach-title">Co-Author · IEEE Silchar Subsection Conference 2025</h4>
-            <p class="ach-desc"><em>Integrated Multimodal Redaction Architecture with Reversible Cryptographic Obfuscation</em> — visual PII masking with cryptographic retrieval.</p>
+            <div class="ach-label">Research Publication</div>
+            <h4 class="ach-title">Co-Author · IGI Global Book Chapter</h4>
+            <p class="ach-desc">Co-authored a research chapter on <em>Integrated Multimodal Redaction Architecture with Reversible Cryptographic Obfuscation</em> under the theme <em>Managing Sensitive Health Data: Privacy-Preserving Techniques</em>.</p>
           </div>
           <div class="ach-item">
             <div class="ach-label">1st Place</div>
