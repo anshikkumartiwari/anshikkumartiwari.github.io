@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Redirecting — Anshik Kumar Tiwari</title>
   <script>
-    (async function() {
+    (function() {
       const path = window.location.pathname;
       const segments = path.split('/').filter(Boolean);
       
@@ -17,6 +17,12 @@
       const offset = isSubpath ? 1 : 0;
       const remainingSegments = segments.slice(offset);
 
+      // If no segment or first segment is not 'blogs', redirect to home instantly (synchronously)
+      if (remainingSegments.length === 0 || remainingSegments[0] !== 'blogs') {
+        window.location.replace(`${repoPrefix || '/'}`);
+        return;
+      }
+
       // Rule 1: Redirect /blogs or /blogs/ to blogs.html
       if (remainingSegments.length === 1 && remainingSegments[0] === 'blogs') {
         window.location.replace(`${repoPrefix}/blogs.html`);
@@ -26,32 +32,33 @@
       // Rule 2: Redirect /blogs/title-slug to pages/article.html?a=article-file
       if (remainingSegments.length >= 2 && remainingSegments[0] === 'blogs') {
         const slug = remainingSegments[1];
-        try {
-          const res = await fetch(`${repoPrefix}/blogs/manifest.json`);
-          if (res.ok) {
-            const manifest = await res.json();
-            
-            function generateSlug(text) {
-              return text
-                .toLowerCase()
-                .replace(/[^a-z0-9\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-');
+        (async function() {
+          try {
+            const res = await fetch(`${repoPrefix}/blogs/manifest.json`);
+            if (res.ok) {
+              const manifest = await res.json();
+              
+              function generateSlug(text) {
+                return text
+                  .toLowerCase()
+                  .replace(/[^a-z0-9\s-]/g, '')
+                  .replace(/\s+/g, '-')
+                  .replace(/-+/g, '-');
+              }
+              
+              const match = manifest.find(item => generateSlug(item.title) === slug);
+              if (match) {
+                window.location.replace(`${repoPrefix}/pages/article.html?a=${match.file}`);
+                return;
+              }
             }
-            
-            const match = manifest.find(item => generateSlug(item.title) === slug);
-            if (match) {
-              window.location.replace(`${repoPrefix}/pages/article.html?a=${match.file}`);
-              return;
-            }
+          } catch (e) {
+            console.error("404 routing error:", e);
           }
-        } catch (e) {
-          console.error("404 routing error:", e);
-        }
+          // Fallback if blog slug not found
+          window.location.replace(`${repoPrefix || '/'}`);
+        })();
       }
-
-      // If no valid route found, redirect back to home index
-      window.location.replace(`${repoPrefix || '/'}`);
     })();
   </script>
 </head>
