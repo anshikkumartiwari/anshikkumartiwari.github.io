@@ -450,7 +450,7 @@
 </section>
 
 <footer class="site-footer">
-  <span>&copy; 2026 Anshik Kumar Tiwari &bull; <span id="visitor-count">Loading...</span></span>
+  <span>&copy; 2026 Anshik Kumar Tiwari<span id="visitor-count-container" style="display: none;"> &bull; <span id="visitor-count"></span></span></span>
   <div class="footer-links">
     <a href="https://anshik.pythonanywhere.com/" target="_blank" rel="noopener">Mini Projects</a>
     <a href="https://pixelchase.42web.io"        target="_blank" rel="noopener">Game</a>
@@ -466,9 +466,12 @@
 fetch("https://anshik.goatcounter.com/counter/TOTAL.json")
   .then(r => r.json())
   .then(data => {
-    document.getElementById("visitor-count").textContent =
-      data.count + " visitors";
-  });
+    if (data && data.count !== undefined) {
+      document.getElementById("visitor-count").textContent = data.count + " visitors";
+      document.getElementById("visitor-count-container").style.display = "inline";
+    }
+  })
+  .catch(() => {});
 </script>
 </body>
 </html>
