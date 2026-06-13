@@ -345,7 +345,7 @@
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <span>&copy; 2026 Anshik Kumar Tiwari</span>
+    <span>&copy; 2026 Anshik Kumar Tiwari &bull; <span id="visitor-count">Loading...</span></span>
   </footer>
 
   <script>
@@ -355,6 +355,12 @@
     document.addEventListener("DOMContentLoaded", () => {
       loadWritings();
       setupSearch();
+      fetch("https://anshik.goatcounter.com/counter/TOTAL.json")
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById("visitor-count").textContent =
+            data.count + " visitors";
+        });
     });
 
     async function loadWritings() {
