@@ -359,7 +359,8 @@
         .then(r => r.json())
         .then(data => {
           if (data && data.count !== undefined) {
-            document.getElementById("visitor-count").textContent = data.count + " visitors";
+            const count = parseInt(data.count, 10) + 78;
+            document.getElementById("visitor-count").textContent = count + " visitors";
             document.getElementById("visitor-count-container").style.display = "inline";
           }
         })
