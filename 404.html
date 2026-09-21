@@ -17,6 +17,12 @@
       const offset = isSubpath ? 1 : 0;
       const remainingSegments = segments.slice(offset);
 
+      // Redirect /ptmic to Paytm Innovation Challenge Form Analysis Report
+      if (remainingSegments.length > 0 && remainingSegments[0].toLowerCase() === 'ptmic') {
+        window.location.replace('https://drive.google.com/file/d/1ekNw0kq9Ppt4meZmBY4muuJ9TGVKCgho/view?usp=sharing');
+        return;
+      }
+
       // If no segment or first segment is not 'blogs', redirect to home instantly (synchronously)
       if (remainingSegments.length === 0 || remainingSegments[0] !== 'blogs') {
         window.location.replace(`${repoPrefix || '/'}`);
