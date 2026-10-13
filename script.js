@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTheme();
   initDropdown();
   initNavHighlight();
+  initBlogs();
   initContactForm();
 });
 
@@ -124,6 +125,107 @@ function initNavHighlight() {
   });
 
   document.querySelectorAll("section[id]").forEach(s => obs.observe(s));
+}
+
+/* ==========================================================================
+   BLOGS SYSTEM
+   ========================================================================== */
+function initBlogs() {
+  const blogList = document.getElementById("blog-list");
+  if (!blogList) return;
+
+  loadBlogList(blogList);
+}
+
+function generateSlug(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function parseFrontMatter(text) {
+  const regex = /^---\r?\n([\s\S]*?)\r?\n---/;
+  const match = text.match(regex);
+  const metadata = {};
+  let bodyContent = text;
+
+  if (match) {
+    bodyContent = text.replace(match[0], '').trim();
+    const yaml = match[1];
+    const lines = yaml.split('\n');
+    for (const line of lines) {
+      const colonIdx = line.indexOf(':');
+      if (colonIdx !== -1) {
+        const key = line.slice(0, colonIdx).trim();
+        let val = line.slice(colonIdx + 1).trim();
+        val = val.replace(/^['"]|['"]$/g, '');
+        metadata[key] = val;
+      }
+    }
+  }
+  return { metadata, bodyContent };
+}
+
+async function loadBlogList(container) {
+  let articles = [];
+
+  // 1. Try remote blogs repository (raw.githubusercontent.com)
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/manifest.json");
+    if (res.ok) {
+      articles = await res.json();
+    }
+  } catch (e) {
+    console.warn("Remote manifest load failed, attempting local fallback", e);
+  }
+
+  // 2. Try local fallback if present
+  if (articles.length === 0) {
+    try {
+      const res = await fetch("blogs/manifest.json");
+      if (res.ok) {
+        articles = await res.json();
+      }
+    } catch (e) {
+      console.warn("Local manifest load failed", e);
+    }
+  }
+
+  if (articles.length === 0) {
+    container.innerHTML = `<div style="text-align:center;color:var(--muted);padding:2rem;font-family:var(--f-mono);">No articles published yet.</div>`;
+    return;
+  }
+
+  // Render cards
+  container.innerHTML = articles.map(art => {
+    const targetFile = art.file || (art.id ? `${art.id}/blog.md` : "blog1/blog.md");
+    const titleSlug = art.slug || generateSlug(art.title);
+    
+    const thumbHtml = art.thumbnail 
+      ? `<img src="${art.thumbnail}" alt="Thumbnail" class="blog-card-thumb">`
+      : `<div class="blog-card-thumb" style="display:flex;align-items:center;justify-content:center;font-family:var(--f-head);font-weight:700;font-size:1.5rem;color:var(--accent);background:var(--accent-bg);">${art.title.charAt(0)}</div>`;
+
+    return `
+      <a href="pages/article.html?a=${encodeURIComponent(targetFile)}" class="blog-card" data-slug="/blogs/${titleSlug}">
+        <div class="blog-card-left">
+          <h3 class="blog-card-title">${art.title}</h3>
+          <p class="blog-card-desc">${art.description || art.subtitle || ""}</p>
+          <div class="blog-card-meta">
+            <span class="blog-card-author">Anshik Kumar Tiwari</span>
+            <span class="blog-card-sep">•</span>
+            <span class="blog-card-date">${art.date}</span>
+            <span class="blog-card-sep">•</span>
+            <span class="blog-card-read">${art.readTime}</span>
+          </div>
+        </div>
+        <div class="blog-card-right">
+          ${thumbHtml}
+        </div>
+      </a>
+    `;
+  }).join('');
 }
 
 /* ==========================================================================
