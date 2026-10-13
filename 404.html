@@ -40,29 +40,51 @@
         const slug = remainingSegments[1];
         (async function() {
           try {
-            const res = await fetch(`${repoPrefix}/blogs/manifest.json`);
-            if (res.ok) {
-              const manifest = await res.json();
-              
-              function generateSlug(text) {
-                return text
-                  .toLowerCase()
-                  .replace(/[^a-z0-9\s-]/g, '')
-                  .replace(/\s+/g, '-')
-                  .replace(/-+/g, '-');
+            function generateSlug(text) {
+              return text
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            }
+
+            let manifest = [];
+            // 1. Try remote manifest from blogs repo
+            try {
+              const res = await fetch('https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/manifest.json');
+              if (res.ok) {
+                manifest = await res.json();
               }
+            } catch (_) {}
+
+            // 2. Local fallback if remote failed
+            if (manifest.length === 0) {
+              try {
+                const res = await fetch(`${repoPrefix}/blogs/manifest.json`);
+                if (res.ok) {
+                  manifest = await res.json();
+                }
+              } catch (_) {}
+            }
+
+            if (manifest.length > 0) {
+              const match = manifest.find(item => 
+                (item.slug && item.slug === slug) || 
+                (item.title && generateSlug(item.title) === slug) ||
+                (item.id && item.id === slug)
+              );
               
-              const match = manifest.find(item => generateSlug(item.title) === slug);
               if (match) {
-                window.location.replace(`${repoPrefix}/pages/article.html?a=${match.file}`);
+                const targetFile = match.file || (match.id ? `${match.id}/blog.md` : 'blog1/blog.md');
+                window.location.replace(`${repoPrefix}/pages/article.html?a=${encodeURIComponent(targetFile)}`);
                 return;
               }
             }
           } catch (e) {
             console.error("404 routing error:", e);
           }
-          // Fallback if blog slug not found
-          window.location.replace(`${repoPrefix || '/'}`);
+          // Fallback if blog slug not found -> redirect to blogs catalog
+          window.location.replace(`${repoPrefix}/blogs.html`);
         })();
       }
     })();
