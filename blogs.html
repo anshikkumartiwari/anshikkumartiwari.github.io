@@ -451,24 +451,36 @@
       const secondaryArts = filtered.slice(1);
 
       // Render Featured
-      const featuredTarget = featuredArt.file || (featuredArt.id ? `${featuredArt.id}/blog.md` : "blog1/blog.md");
+      const featuredFolder = featuredArt.id || (featuredArt.file ? featuredArt.file.split('/')[0] : "blog1");
+      const featuredTarget = featuredArt.file || `${featuredFolder}/article.md`;
       const featuredTitleSlug = featuredArt.slug || generateSlug(featuredArt.title);
-      const featuredThumbHtml = featuredArt.thumbnail
-        ? `<img src="${featuredArt.thumbnail}" alt="" class="featured-thumb">`
-        : `<div class="featured-monogram">${featuredArt.title.charAt(0)}</div>`;
+      const featuredTitle = featuredArt.title || "Untitled";
+      const featuredDesc = featuredArt.description || featuredArt.subtitle || "";
+      const featuredThumbBase = `https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/${featuredFolder}/thumb`;
+      const featuredThumb = featuredArt.thumbnail || `${featuredThumbBase}.png`;
+
+      const featuredThumbHtml = `
+        <img src="${featuredThumb}" alt="${featuredTitle}" class="featured-thumb" onerror="
+          if (this.src.endsWith('.png')) { this.src = '${featuredThumbBase}.jpg'; }
+          else if (this.src.endsWith('.jpg')) { this.src = '${featuredThumbBase}.webp'; }
+          else if (this.src.endsWith('.webp')) { this.src = '${featuredThumbBase}.jpeg'; }
+          else { this.style.display='none'; this.nextElementSibling.style.display='block'; }
+        ">
+        <div class="featured-monogram" style="display:none;">${featuredTitle.charAt(0)}</div>
+      `;
 
       featuredContainer.innerHTML = `
         <a href="pages/article.html?a=${encodeURIComponent(featuredTarget)}" class="featured-card">
           <div>
             <span class="featured-badge">Featured Essay</span>
-            <h2 class="featured-title">${featuredArt.title}</h2>
-            <p class="featured-desc">${featuredArt.description || featuredArt.subtitle || ""}</p>
+            <h2 class="featured-title">${featuredTitle}</h2>
+            <p class="featured-desc">${featuredDesc}</p>
             <div class="meta-row">
               <span>Anshik Kumar Tiwari</span>
               <span class="meta-sep">•</span>
-              <span>${featuredArt.date}</span>
+              <span>${featuredArt.date || ""}</span>
               <span class="meta-sep">•</span>
-              <span>${featuredArt.readTime}</span>
+              <span>${featuredArt.readTime || ""}</span>
             </div>
           </div>
           <div class="featured-thumb-wrap">
@@ -479,11 +491,23 @@
 
       // Render Secondary Grid
       gridContainer.innerHTML = secondaryArts.map(art => {
-        const targetFile = art.file || (art.id ? `${art.id}/blog.md` : "blog1/blog.md");
+        const folder = art.id || (art.file ? art.file.split('/')[0] : "blog1");
+        const targetFile = art.file || `${folder}/article.md`;
         const titleSlug = art.slug || generateSlug(art.title);
-        const thumbHtml = art.thumbnail
-          ? `<img src="${art.thumbnail}" alt="" class="featured-thumb">`
-          : `<div class="featured-monogram" style="font-size:3.5rem;">${art.title.charAt(0)}</div>`;
+        const title = art.title || "Untitled";
+        const desc = art.description || art.subtitle || "";
+        const thumbBase = `https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/${folder}/thumb`;
+        const thumbUrl = art.thumbnail || `${thumbBase}.png`;
+
+        const thumbHtml = `
+          <img src="${thumbUrl}" alt="${title}" class="featured-thumb" onerror="
+            if (this.src.endsWith('.png')) { this.src = '${thumbBase}.jpg'; }
+            else if (this.src.endsWith('.jpg')) { this.src = '${thumbBase}.webp'; }
+            else if (this.src.endsWith('.webp')) { this.src = '${thumbBase}.jpeg'; }
+            else { this.style.display='none'; this.nextElementSibling.style.display='block'; }
+          ">
+          <div class="featured-monogram" style="display:none;font-size:3.5rem;">${title.charAt(0)}</div>
+        `;
 
         return `
           <a href="pages/article.html?a=${encodeURIComponent(targetFile)}" class="editorial-grid-card">
@@ -491,13 +515,13 @@
               <div class="grid-card-thumb-wrap">
                 ${thumbHtml}
               </div>
-              <h3 class="grid-card-title">${art.title}</h3>
-              <p class="grid-card-desc">${art.description || art.subtitle || ""}</p>
+              <h3 class="grid-card-title">${title}</h3>
+              <p class="grid-card-desc">${desc}</p>
             </div>
             <div class="meta-row" style="margin-top:1.5rem;">
-              <span>${art.date}</span>
+              <span>${art.date || ""}</span>
               <span class="meta-sep">•</span>
-              <span>${art.readTime}</span>
+              <span>${art.readTime || ""}</span>
             </div>
           </a>
         `;

@@ -151,21 +151,37 @@
 
     async function loadArticle() {
       const urlParams = new URLSearchParams(window.location.search);
-      let articleFile = urlParams.get("a") || "blog1/blog.md";
+      let articleFile = urlParams.get("a") || "blog1/article.md";
 
       if (!articleFile.endsWith(".md")) {
         articleFile += ".md";
       }
+
+      const folder = articleFile.includes('/') ? articleFile.substring(0, articleFile.lastIndexOf('/')) : 'blog1';
 
       try {
         let metadata = {
           title: "Untitled Article",
           subtitle: "",
           date: "",
-          readTime: ""
+          readTime: "",
+          author: "Anshik Kumar Tiwari",
+          authorImage: "../images/profile.jpg"
         };
 
-        // 1. Fetch manifest (Try remote then local)
+        // 1. Try folder-specific meta.json directly from remote blogs repo (or local)
+        try {
+          let metaRes = await fetch(`https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/${folder}/meta.json`);
+          if (!metaRes.ok) {
+            metaRes = await fetch(`../blogs/${folder}/meta.json`);
+          }
+          if (metaRes.ok) {
+            const folderMeta = await metaRes.json();
+            metadata = { ...metadata, ...folderMeta };
+          }
+        } catch (_) {}
+
+        // 2. Fetch manifest if needed to fill any gaps
         try {
           let mRes = await fetch('https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/manifest.json');
           if (!mRes.ok) {
@@ -173,16 +189,16 @@
           }
           if (mRes.ok) {
             const manifest = await mRes.json();
-            const match = manifest.find(item => item.file === articleFile || item.id === articleFile.split('/')[0]);
+            const match = manifest.find(item => item.file === articleFile || item.id === folder);
             if (match) {
-              metadata = match;
+              metadata = { ...match, ...metadata };
             }
           }
         } catch (e) {
           console.warn("Failed to load manifest", e);
         }
 
-        // 2. Fetch the article markdown body (Try remote blogs repo first, then local)
+        // 3. Fetch the article markdown body (Try remote blogs repo first, then local)
         let rawMarkdown = "";
         try {
           const remoteRes = await fetch(`https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/${articleFile}`);
@@ -205,11 +221,13 @@
         const { metadata: frontMeta, bodyContent } = parseFrontMatter(rawMarkdown);
         metadata = { ...metadata, ...frontMeta };
 
-        // Render metadata
-        document.getElementById("meta-title").textContent = metadata.title || "Untitled";
-        
-        if (metadata.subtitle) {
-          document.getElementById("meta-subtitle").textContent = metadata.subtitle;
+        // Unified title & subtitle (card title & page title are the same)
+        const displayTitle = metadata.title || "Untitled";
+        const displaySubtitle = metadata.subtitle || metadata.description || "";
+
+        document.getElementById("meta-title").textContent = displayTitle;
+        if (displaySubtitle) {
+          document.getElementById("meta-subtitle").textContent = displaySubtitle;
           document.getElementById("meta-subtitle").style.display = "block";
         } else {
           document.getElementById("meta-subtitle").style.display = "none";
@@ -221,7 +239,8 @@
         document.getElementById("meta-date").textContent = metadata.date || "";
         document.getElementById("meta-readtime").textContent = metadata.readTime || "";
 
-        // Render Markdown body with proper options
+        // Update Document Head Info
+        document.title = `${displayTitle} — Anshik Kumar Tiwari`;
         marked.setOptions({
           gfm: true,
           breaks: true

@@ -200,24 +200,41 @@ async function loadBlogList(container) {
 
   // Render cards
   container.innerHTML = articles.map(art => {
-    const targetFile = art.file || (art.id ? `${art.id}/blog.md` : "blog1/blog.md");
+    const folder = art.id || (art.file ? art.file.split('/')[0] : "blog1");
+    const targetFile = art.file || `${folder}/article.md`;
     const titleSlug = art.slug || generateSlug(art.title);
-    
-    const thumbHtml = art.thumbnail 
-      ? `<img src="${art.thumbnail}" alt="Thumbnail" class="blog-card-thumb">`
-      : `<div class="blog-card-thumb" style="display:flex;align-items:center;justify-content:center;font-family:var(--f-head);font-weight:700;font-size:1.5rem;color:var(--accent);background:var(--accent-bg);">${art.title.charAt(0)}</div>`;
+    const title = art.title || "Untitled";
+    const desc = art.description || art.subtitle || "";
+
+    // Candidate thumb url from remote blogs repo (supports any thumb.png/jpg/webp/svg)
+    const remoteThumbBase = `https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/${folder}/thumb`;
+    const initialThumb = art.thumbnail || `${remoteThumbBase}.png`;
+    const monogram = title.charAt(0);
+
+    const thumbHtml = `
+      <img src="${initialThumb}" 
+           alt="${title}" 
+           class="blog-card-thumb"
+           onerror="
+             if (this.src.endsWith('.png')) { this.src = '${remoteThumbBase}.jpg'; }
+             else if (this.src.endsWith('.jpg')) { this.src = '${remoteThumbBase}.webp'; }
+             else if (this.src.endsWith('.webp')) { this.src = '${remoteThumbBase}.jpeg'; }
+             else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }
+           ">
+      <div class="blog-card-thumb" style="display:none;align-items:center;justify-content:center;font-family:var(--f-head);font-weight:700;font-size:1.4rem;color:var(--accent);background:var(--accent-bg);">${monogram}</div>
+    `;
 
     return `
       <a href="pages/article.html?a=${encodeURIComponent(targetFile)}" class="blog-card" data-slug="/blogs/${titleSlug}">
         <div class="blog-card-left">
-          <h3 class="blog-card-title">${art.title}</h3>
-          <p class="blog-card-desc">${art.description || art.subtitle || ""}</p>
+          <h3 class="blog-card-title">${title}</h3>
+          <p class="blog-card-desc">${desc}</p>
           <div class="blog-card-meta">
             <span class="blog-card-author">Anshik Kumar Tiwari</span>
             <span class="blog-card-sep">•</span>
-            <span class="blog-card-date">${art.date}</span>
+            <span class="blog-card-date">${art.date || ""}</span>
             <span class="blog-card-sep">•</span>
-            <span class="blog-card-read">${art.readTime}</span>
+            <span class="blog-card-read">${art.readTime || ""}</span>
           </div>
         </div>
         <div class="blog-card-right">

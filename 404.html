@@ -75,7 +75,7 @@
               );
               
               if (match) {
-                const targetFile = match.file || (match.id ? `${match.id}/blog.md` : 'blog1/blog.md');
+                const targetFile = match.file || (match.id ? `${match.id}/article.md` : 'blog1/article.md');
                 window.location.replace(`${repoPrefix}/pages/article.html?a=${encodeURIComponent(targetFile)}`);
                 return;
               }
