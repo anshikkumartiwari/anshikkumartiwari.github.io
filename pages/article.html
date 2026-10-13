@@ -221,11 +221,24 @@
         document.getElementById("meta-date").textContent = metadata.date || "";
         document.getElementById("meta-readtime").textContent = metadata.readTime || "";
 
-        // Update Document Head Info
-        document.title = `${metadata.title} — Anshik Kumar Tiwari`;
+        // Render Markdown body with proper options
+        marked.setOptions({
+          gfm: true,
+          breaks: true
+        });
 
-        // Render Markdown body
-        const renderedHtml = marked.parse(bodyContent);
+        // Resolve relative images inside markdown (e.g., ./image.png or image.png within blog folder)
+        const blogFolder = articleFile.includes('/') ? articleFile.substring(0, articleFile.lastIndexOf('/')) : '';
+        const renderer = new marked.Renderer();
+        const origImage = renderer.image.bind(renderer);
+        renderer.image = (href, title, text) => {
+          if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('/') && !href.startsWith('../')) {
+            href = `https://raw.githubusercontent.com/anshikkumartiwari/blogs/main/${blogFolder}/${href}`;
+          }
+          return origImage(href, title, text);
+        };
+
+        const renderedHtml = marked.parse(bodyContent, { renderer });
         document.getElementById("rendered-body").innerHTML = renderedHtml;
 
         // Hide loading, show article
